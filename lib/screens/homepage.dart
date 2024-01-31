@@ -7,14 +7,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          "data",
-          style: TextStyle(
-            fontSize: 40,
-            color: Colors.deepPurple,
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Form(
+            child: Column(
+              children: [TextFormField()],
+            ),
           ),
-        ),
-      ),
+        ],
+      )),
     );
   }
 }
