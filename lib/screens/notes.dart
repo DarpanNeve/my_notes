@@ -17,7 +17,7 @@ class Notes extends StatelessWidget {
             padding: const EdgeInsets.all(5.0),
             child: Text(
               notesData[index]["title"]!
-            )),
+            ),),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 10,
