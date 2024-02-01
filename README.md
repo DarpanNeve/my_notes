@@ -15,4 +15,3 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 
 https://aryanvij02.medium.com/add-firebase-to-flutter-on-windows-f83546e13b10
-samples, guidance on mobile development, and a full API reference.
