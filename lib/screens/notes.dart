@@ -13,18 +13,20 @@ class Notes extends StatelessWidget {
       ),
       body: GridView.builder(
           itemCount: notesData.length,
-          itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: ListTile(
-                tileColor: Colors.teal,
-                title: Text(notesData[index]['title']!),
-                subtitle: Text(notesData[index]['content']!),
-              )),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          )),
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: ListTile(
+            tileColor: Colors.teal,
+            title: Text(notesData[index]['title']!),
+            subtitle: Text(notesData[index]['content']!),
+          ),
+        ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(
