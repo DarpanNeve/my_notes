@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes/AuthService/auth_service.dart';
 import 'package:my_notes/data/dummy_data.dart';
 
 import 'create_note.dart';
@@ -12,6 +13,14 @@ class Notes extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.orangeAccent,
         title: const Text('Notes'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              AuthService().signOut(context);
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: GridView.builder(
           itemCount: notesData.length,

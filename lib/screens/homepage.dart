@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes/AuthService/auth_service.dart';
 
 import 'create_note.dart';
 
@@ -69,6 +70,9 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: const Text('submit'),
                 ),
+                IconButton(onPressed: (){
+                  AuthService().signInWithGoogle(context);
+                }, icon: const Icon(Icons.login))
               ],
             ),
           ),
