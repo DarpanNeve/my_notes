@@ -26,7 +26,7 @@ class CreateNote extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
-          key: _formkey,
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
