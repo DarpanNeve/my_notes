@@ -13,40 +13,76 @@ class AuthService {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData) {
-          return const Notes();
+          return Notes();
           // Navigate to the home page.
         } else {
           // User is not signed in.
-          return const HomePage(); // Navigate to the login page.
+          return HomePage(); // Navigate to the login page.
         }
       },
     );
   }
 
-
-
-  signInWithGoogle(BuildContext context) async{
-      try{
-        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-        final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken,
-          idToken: googleAuth?.idToken,
-        );
-        return await FirebaseAuth.instance.signInWithCredential(credential);
-
-      }catch(e){
-        debugPrint(e.toString());
-        return null;
+  createUser(String emailAddress, String password) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
       }
-   }
-   signOut(BuildContext context) async {
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  signInWithEmail(String emailAddress, String password) async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: emailAddress, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
+  }
+
+  signOut(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
       await GoogleSignIn().signOut();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login Successful")));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Login Successful")));
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("error occured")));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("error occured")));
+      }
     }
   }
 }

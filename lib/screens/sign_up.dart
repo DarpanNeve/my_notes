@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_notes/AuthService/auth_service.dart';
-import 'package:my_notes/screens/sign_up.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({super.key});
+class SignUp extends StatelessWidget {
+  SignUp({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   String id = '';
   String password = '';
@@ -18,9 +12,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
             child: Card(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -28,13 +22,11 @@ class _HomePageState extends State<HomePage> {
                   Form(
                     key: _formKey,
                     child: Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       child: Column(
                         children: [
-                          Image.network(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsCl_3kAxtuyfdxd7RPEjOHlOGQ0UAwT5MgA&usqp=CAU'),
                           TextFormField(
-                            decoration:InputDecoration(
+                            decoration:const InputDecoration(
                               label: Text("ID"),
                             ),
                             // The validator receives the text that the user has entered.
@@ -71,27 +63,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       _formKey.currentState!.validate();
                       if (!_formKey.currentState!.validate()) {
                         return;
                       }
                       _formKey.currentState!.save();
-                      AuthService().signInWithEmail(id, password);
+                      await AuthService().createUser(id, password);
+                      Navigator.of(context).pop();
                     },
-                    child: const Text('submit'),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      AuthService().signInWithGoogle(context);
-                    },
-                    icon: const Icon(Icons.login),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SignUp()));
-                    },
-                    child: Text("Create user"),
+                    child: const Text('SignUp'),
                   ),
                 ],
               ),

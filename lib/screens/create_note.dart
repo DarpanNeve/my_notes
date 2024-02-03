@@ -6,8 +6,8 @@ class CreateNote extends StatelessWidget {
   CreateNote({super.key});
   final auth=FirebaseAuth.instance.currentUser!.email;
   final _formKey = GlobalKey<FormState>();
-String title='';
-String content='';
+  String title = '';
+  String content = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
