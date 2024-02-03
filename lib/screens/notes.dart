@@ -31,7 +31,7 @@ class Notes extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> const CreateNote()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> CreateNote()));
         },
         child: const Icon(
           Icons.add,
