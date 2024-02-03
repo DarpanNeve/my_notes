@@ -3,13 +3,25 @@ import 'package:flutter/material.dart';
 class CreateNote extends StatelessWidget {
   CreateNote({super.key});
 
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Note'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _formKey.currentState!.validate();
+              if (!_formKey.currentState!.validate()) {
+                return;
+              }
+              // Start procedure of saving the note
+            },
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -19,6 +31,7 @@ class CreateNote extends StatelessWidget {
             children: [
               TextFormField(
                   decoration: const InputDecoration(
+                    border: InputBorder.none,
                     labelText: 'Title',
                   ),
                   validator: (value) {
@@ -27,23 +40,20 @@ class CreateNote extends StatelessWidget {
                     }
                     return null;
                   }),
-              TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Content',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some valid email';
-                    }
-                    return null;
-                  }),
-              ElevatedButton(
-                onPressed: () {
-                  // Add note to database
-                  Navigator.pop(context);
-                },
-                child: const Text('Save'),
+              Expanded(
+                child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Content',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some valid email';
+                      }
+                      return null;
+                    }),
               ),
+
             ],
           ),
         ),
