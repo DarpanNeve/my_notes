@@ -32,22 +32,21 @@ class Notes extends StatelessWidget {
           if (snapshot.hasData) {
             print(snapshot.data);
             final List<DocumentSnapshot> documents = snapshot.data!.docs;
-            return GridView.builder(
-              itemCount: documents.length,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: ListTile(
-                  tileColor: Colors.teal,
-                  title: Text(notesData[index]['title']!),
-                  subtitle: Text(notesData[index]['content']!),
+            return GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ), itemCount: documents.length,
+             itemBuilder: (context, index) {
+              return Card(
+                child: Column(
+                  children: [
+                    Text(documents[index]['title']),
+                    Text(documents[index]['content']),
+                  ],
                 ),
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-            );
+              );
+            });
           } else {
             return const Center(child: Text("No data"));
           }

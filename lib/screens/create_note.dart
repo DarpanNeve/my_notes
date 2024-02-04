@@ -21,9 +21,9 @@ class CreateNote extends StatelessWidget {
                 return;
               }
               _formKey.currentState!.save();
-              await FirebaseFirestore.instance.collection(auth!).doc().collection("Notes").doc().set({
-                'title':title,
-                'content':content,
+              await FirebaseFirestore.instance.collection(auth!).add({
+                'title': title,
+                'content': content,
                 'time':DateTime.now(),
               });
               if(context.mounted){
